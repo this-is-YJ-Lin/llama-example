@@ -1,0 +1,20 @@
+services:
+  nginx:
+    links:
+      - flask:flask
+    build: 
+      context: .
+      dockerfile: Dockerfile.nginx
+    ports:
+      - 1000:80
+  flask:
+    build: 
+      context: .
+      dockerfile: Dockerfile.flask
+    command: "tail -f /etc/resolv.conf"
+    volumes:
+      - ".:/flask-test"
+    ports:
+      - 8501:8501
+networks:
+  default: 
